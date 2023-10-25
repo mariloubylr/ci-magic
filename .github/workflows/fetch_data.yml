@@ -35,7 +35,7 @@ jobs:
 
       - name: Copy data to gh-pages branch
         run: |
-          mkdir temp_build
+          mkdir temp_build/data_dir
           cp data_dir/* temp_build/data_dir/
           cd temp_build
           ls
