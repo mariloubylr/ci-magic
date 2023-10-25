@@ -1,0 +1,26 @@
+name: run data fetching job
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - run: cd backend
+      - name: checkout repo content
+        uses: actions/checkout@main # checkout the repository content
+
+      - name: setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # install python
+
+      - name: install python packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: execute python script # run main.py
+        run: python backend/fetch_data.py
