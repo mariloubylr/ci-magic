@@ -11,7 +11,7 @@ jobs:
     - uses: actions/setup-node@main
     - name: build and publish pages
       run: |
-            cd viz
+            cd frontend
             npm install
             npm run build
             cd dist
