@@ -19,7 +19,10 @@ jobs:
         with:
           python-version: '3.10' # install python
 
-      - run: cd backend
+      - run: |
+          cd backend
+          ls
+        shell: bash
 
       - name: install python packages
         run: |
