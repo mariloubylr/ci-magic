@@ -1,6 +1,9 @@
 name: run data fetching job
 
-on:
+on: 
+  push:
+    branches:
+      - main
   schedule:
     - cron: '*/6 * * * *' 
 
@@ -8,7 +11,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: cd backend
       - name: checkout repo content
         uses: actions/checkout@main # checkout the repository content
 
@@ -16,6 +18,8 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10' # install python
+
+      - run: cd backend
 
       - name: install python packages
         run: |
