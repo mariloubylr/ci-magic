@@ -1,9 +1,11 @@
 name: run data fetching job
 
 on: 
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: ["build-frontend"]
+    branches: [main]
+    types: 
+      - completed
   schedule:
     - cron: '*/6 * * * *' 
 
