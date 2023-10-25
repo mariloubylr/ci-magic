@@ -49,7 +49,7 @@ jobs:
           git add -A
           git status
           git commit -qm "update data"
-          git push -qf origin gh-pages:gh-pages
+          git push -qf https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git gh-pages:gh-pages
         shell: bash
   
         
