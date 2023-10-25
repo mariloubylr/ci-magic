@@ -15,9 +15,10 @@ jobs:
             npm install
             npm run build
             cd dist
-            git init
+            git config --global init.defaultBranch main
             git config --global user.email "marilou.beyeler@gmail.com"
             git config --global user.name "mariloubylr"
+            git init
             git add -A
             git commit -m 'deploy github pages'
             
