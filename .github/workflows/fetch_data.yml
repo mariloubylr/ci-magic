@@ -2,7 +2,7 @@ name: run data fetching job
 
 on:
   schedule:
-    - cron: '* * * * *' 
+    - cron: '*/15 * * * *' 
 
 jobs:
   build:
