@@ -2,7 +2,7 @@ name: run data fetching job
 
 on:
   schedule:
-    - cron: '*/1 * * * *' 
+    - cron: '* * * * *' 
 
 jobs:
   build:
@@ -23,4 +23,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: execute python script # run main.py
-        run: python backend/fetch_data.py
+        run: |
+          python backend/fetch_data.py
+          ls
+        
