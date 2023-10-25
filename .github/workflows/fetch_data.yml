@@ -50,7 +50,7 @@ jobs:
           git config --local advice.skippedCherryPicks false # Disable messages to include skipped commits
           git pull -q origin gh-pages --rebase -X theirs > /dev/null
 
-          cp ../data_dir/* temp_build/data_dir/
+          cp ../data_dir/* data_dir/
 
           git add -A
           git status
