@@ -41,7 +41,7 @@ jobs:
           ls
           git init -q --initial-branch='gh-pages'
           git config --local advice.skippedCherryPicks false # Disable messages to include skipped commits
-          git remote add origin ${github.repositoryUrl}
+          git remote add origin ${{ github.repositoryUrl }}
           git pull -q origin gh-pages --rebase -X theirs > /dev/null
 
           git add -A
