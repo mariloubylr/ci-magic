@@ -8,9 +8,7 @@ jobs:
     steps:
     - name: checkout repo
       uses: actions/checkout@main
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
+    - uses: actions/setup-node@main
     - name: build and publish pages
       run: |
             cd viz
