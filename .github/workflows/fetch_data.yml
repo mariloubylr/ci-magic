@@ -40,10 +40,10 @@ jobs:
           cd temp_build
           ls
           git init -q --initial-branch='gh-pages'
+          git remote add origin https://github.com/mariloubylr/ci-magic.git
           git config --global user.email "marilou.beyeler@gmail.com"
           git config --global user.name "mariloubylr"
           git config --local advice.skippedCherryPicks false # Disable messages to include skipped commits
-          git remote add origin https://github.com/mariloubylr/ci-magic.git
           git pull -q origin gh-pages --rebase -X theirs > /dev/null
 
           git add -A
