@@ -22,5 +22,5 @@ jobs:
             git add -A
             git commit -m 'deploy github pages'
             
-            git push -f https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git master:gh-pages
+            git push -f https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git main:gh-pages
       shell: bash
