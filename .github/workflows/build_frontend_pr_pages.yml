@@ -18,7 +18,7 @@ jobs:
             mkdir -p app/dist/pr
             export VUE_APP_BASE=prod
             npm run build -- --dest=app/dist/pr
-            cd dist
+            cd app/dist
             git config --global init.defaultBranch main
             git config --global user.email "marilou.beyeler@gmail.com"
             git config --global user.name "mariloubylr"
