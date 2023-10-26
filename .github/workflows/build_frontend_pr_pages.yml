@@ -15,6 +15,7 @@ jobs:
       run: |
             cd frontend
             npm install
+            mkdir -p /app/dist/pr
             npm run build --base=pr --outDir /app/dist/pr
             cd dist
             git config --global init.defaultBranch main
