@@ -16,6 +16,7 @@ jobs:
             cd frontend
             npm install
             mkdir -p app/dist/pr
+            export VUE_APP_BASE=prod
             npm run build -- --dest=/app/dist/pr
             cd dist
             git config --global init.defaultBranch main
