@@ -2,8 +2,7 @@ name: build-frontend-pr-pages
 
 on:
   pull_request:
-    branches:
-      - main
+  
 jobs:
   build:
     runs-on: ubuntu-latest
