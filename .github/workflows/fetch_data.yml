@@ -52,8 +52,8 @@ jobs:
 
 
           ls
-          mkdir data_dir
-          cp ../data_dir/* data_dir/
+          mkdir -p data
+          cp ../data/* data/
 
           git add -A
           git status
