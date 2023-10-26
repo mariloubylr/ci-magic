@@ -1,0 +1,28 @@
+name: build-frontend-main
+
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@main
+    - uses: actions/setup-node@main
+    - name: build and publish pages
+      run: |
+            cd frontend
+            npm install
+            npm run build --base=pr --outDir /app/dist/pr
+            cd dist
+            git config --global init.defaultBranch main
+            git config --global user.email "marilou.beyeler@gmail.com"
+            git config --global user.name "mariloubylr"
+            git init
+            git add -A
+            git commit -m 'deploy github pages'
+            
+            git push -f https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git main:gh-pages
+      shell: bash
