@@ -35,7 +35,7 @@ jobs:
 
       - name: execute python script # run main.py
         run: |
-          python backend/fetch_data.py data_dir
+          python backend/fetch_data.py data
           ls
 
       - name: Copy data to gh-pages branch
