@@ -17,13 +17,13 @@ jobs:
     - name: build and publish pages
       run: |
             cd frontend
-            git clone --branch gh-pages ${{env.GITHUB_URL}} ${{env.BUILD_DIR}}
-            cd ${{env.BUILD_DIR}}
-            ls
+            
             mkdir -p ${{env.PR_NUMBER}}
             export VUE_APP_BASE=${{env.PR_NUMBER}}
             npm run build -- --dest= ${{env.PR_NUMBER}}
-
+            git clone --branch gh-pages ${{env.GITHUB_URL}} ${{env.BUILD_DIR}}
+            cd ${{env.BUILD_DIR}}
+            ls
             git config --global user.email "marilou.beyeler@gmail.com"
             git config --global user.name "mariloubylr"
             git add -A
