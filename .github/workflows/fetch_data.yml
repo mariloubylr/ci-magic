@@ -57,10 +57,7 @@ jobs:
       - name: Copy data into repo
         run: |
           echo $DATA_TARGET
-          mkdir -p $DATA_TARGET
-          ls
-          echo Going into data
-      
+          mkdir -p temp_build/$DATA_TARGET
           cp data/* temp_build/$DATA_TARGET/
         shell: bash
       - name: Publish Data
