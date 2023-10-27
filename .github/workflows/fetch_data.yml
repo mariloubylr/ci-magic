@@ -62,7 +62,7 @@ jobs:
           echo Going into data
       
           cp data/* temp_build/$DATA_TARGET
-          cd ../temp_build
+          cd temp_build
 
           git add -A
           git status
