@@ -45,14 +45,14 @@ jobs:
           git pull -q origin gh-pages --rebase -X theirs > /dev/null
 
       - name: Sets env vars for prod
-        if: github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/main'
         run: |
           if [[ ]]
           echo "production"
           echo ${{ github.ref }}
           echo "DATA_TARGET=prod/data" >> $GITHUB_ENV
       - name: Sets env vars for PRs
-        if: false == ${{github.ref == 'refs/heads/master'}}
+        if: false == ${{github.ref == 'refs/heads/main'}}
         run: |
           echo "pr data"
           echo ${{ github.ref }}
