@@ -25,7 +25,7 @@ jobs:
             git config --global user.name "mariloubylr"
             git init
             git add -A
-            git commit -m 'deploy github pages ${{env.PR_NUMBER}}''
+            git commit -m 'deploy github pages ${{env.PR_NUMBER}}'
             
             if [[ $(git diff origin/gh-pages) ]]
             then
