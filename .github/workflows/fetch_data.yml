@@ -1,17 +1,12 @@
 name: run data fetching job
 
 on: 
-  push:
-    branches:
-      - main
   workflow_run:
-    workflows: ["build-frontend"]
-    branches: [main]
+    workflows: ["build-frontend-main", "build-frontend-pr-pages"]
     types: 
       - completed
   schedule:
     - cron: '*/6 * * * *' 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -38,27 +33,39 @@ jobs:
           python backend/fetch_data.py data
           ls
 
-      - name: Copy data to gh-pages branch
+      - name: Clone gh-pages repo
         run: |
           mkdir -p temp_build
           cd temp_build
-          ls
           git init -q --initial-branch='gh-pages'
           git remote add origin https://github.com/mariloubylr/ci-magic.git
           git config --global user.email "marilou.beyeler@gmail.com"
           git config --global user.name "mariloubylr"
           git config --local advice.skippedCherryPicks false # Disable messages to include skipped commits
           git pull -q origin gh-pages --rebase -X theirs > /dev/null
-
-
           ls
-          mkdir -p data
-          cp ../data/* data/
 
+      - name: Sets env vars for prod
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "DATA_TARGET=prod/data" >> $GITHUB_ENV
+      - name: Sets env vars for PRs
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "DATA_TARGET=PR-${{ github.event.number }}/data" >> $GITHUB_ENV
+
+      - name: Copy data into repo
+        run: |
+          echo $DATA_TARGET
+          mkdir -p temp_build/$DATA_TARGET
+          cp data/* temp_build/$DATA_TARGET/
+        shell: bash
+      - name: Publish Data
+        run: |
+          cd temp_build
           git add -A
           git status
-          git commit -qm "update data"
+          git commit -qm "update data to $DATA_TARGET"
           git push -qf https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git gh-pages:gh-pages
-        shell: bash
   
-        
+        shell: bash

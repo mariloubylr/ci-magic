@@ -14,17 +14,21 @@ jobs:
     - name: build and publish pages
       run: |
             cd frontend
+            git config --local advice.skippedCherryPicks false 
+            git clone --branch gh-pages https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git app/dist
             npm install
-            mkdir -p app/dist/prod
             export VUE_APP_BASE=prod
             npm run build -- --dest=app/dist/prod
             cd app/dist
-            git config --global init.defaultBranch main
             git config --global user.email "marilou.beyeler@gmail.com"
             git config --global user.name "mariloubylr"
-            git init
             git add -A
             git commit -m 'deploy github pages prod'
-            
-            git push -f https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git main:gh-pages
+            if [[ $(git diff origin/gh-pages) ]]
+            then
+              echo "Remote changes are overwritten by local changes."
+              git push -qf origin gh-pages:gh-pages
+            else
+                echo "No new changes"
+            fi      
       shell: bash
