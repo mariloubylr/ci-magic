@@ -61,13 +61,14 @@ jobs:
           ls
           echo Going into data
       
-          cp data/* temp_build/$DATA_TARGET
+          cp data/* temp_build/$DATA_TARGET/
+        shell: bash
+      - name: Publish Data
+        run: |
           cd temp_build
-
           git add -A
           git status
           git commit -qm "update data to $DATA_TARGET"
           git push -qf https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git gh-pages:gh-pages
-        shell: bash
   
-        
+        shell: bash
