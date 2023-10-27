@@ -29,6 +29,6 @@ jobs:
             git add -A
             git commit -m 'deploy github pages ${{env.PR_NUMBER}}'
             
-            git push -qf ${{GITHUB_URL}} gh-pages:gh-pages
+            git push -qf ${{env.GITHUB_URL}} gh-pages:gh-pages
      
       shell: bash
