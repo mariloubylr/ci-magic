@@ -1,12 +1,8 @@
 name: run data fetching job
 
 on: 
-  push:
-    branches:
-      - main
   workflow_run:
-    workflows: ["build-frontend"]
-    branches: [main]
+    workflows: ["build-frontend-main", "build-frontend-pr-pages"]
     types: 
       - completed
   schedule:
@@ -38,11 +34,10 @@ jobs:
           python backend/fetch_data.py data
           ls
 
-      - name: Copy data to gh-pages branch
+      - name: Clone gh-pages repo
         run: |
           mkdir -p temp_build
           cd temp_build
-          ls
           git init -q --initial-branch='gh-pages'
           git remote add origin https://github.com/mariloubylr/ci-magic.git
           git config --global user.email "marilou.beyeler@gmail.com"
@@ -50,14 +45,20 @@ jobs:
           git config --local advice.skippedCherryPicks false # Disable messages to include skipped commits
           git pull -q origin gh-pages --rebase -X theirs > /dev/null
 
-
-          ls
-          mkdir -p data
-          cp ../data/* data/
+      - name: Copy data into repo
+        run: |
+          if [[ "${{github.base_ref}}" == "master" ]]; then
+            export DATA_TARGET_DIR=data/prod
+          else
+            export DATA_TARGET_DIR=data/PR-${{ github.event.number }}
+          fi
+          echo $DATA_TARGET
+          mkdir -p $DATA_TARGET
+          cp ../data/* $DATA_TARGET
 
           git add -A
           git status
-          git commit -qm "update data"
+          git commit -qm "update data to $DATA_TARGET"
           git push -qf https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git gh-pages:gh-pages
         shell: bash
   
