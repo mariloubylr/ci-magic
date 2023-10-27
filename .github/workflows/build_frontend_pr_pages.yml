@@ -2,8 +2,7 @@ name: build-frontend-pr-pages
 
 on:
   pull_request:
-    branches:
-      - main
+
 env:
   PR_NUMBER: ${{ github.event.number }}
 jobs:
