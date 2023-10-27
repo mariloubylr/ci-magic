@@ -13,17 +13,16 @@ jobs:
     - name: build and publish pages
       run: |
             cd frontend
+            git config --local advice.skippedCherryPicks false 
+            git clone --branch gh-pages https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git app/dist
             npm install
-            mkdir -p app/dist/pr
             export VUE_APP_BASE=pr
             npm run build -- --dest=app/dist/pr
             cd app/dist
-            git config --local advice.skippedCherryPicks false 
-            git clone --branch gh-pages https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git app/dist
             git config --global user.email "marilou.beyeler@gmail.com"
             git config --global user.name "mariloubylr"
             git add -A
             git commit -m 'deploy github pages pr'
             
-            git push -f https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git main:gh-pages
+            git push -f https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git gh-pages:gh-pages
       shell: bash
