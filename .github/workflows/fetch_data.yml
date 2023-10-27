@@ -61,7 +61,7 @@ jobs:
         run: |
           echo $DATA_TARGET
           mkdir -p $DATA_TARGET
-          cp ../../data/* $DATA_TARGET
+          cp ../data/* $DATA_TARGET
 
           git add -A
           git status
