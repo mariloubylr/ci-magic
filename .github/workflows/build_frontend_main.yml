@@ -24,7 +24,8 @@ jobs:
             git config --global user.name "mariloubylr"
             git add -A
             git commit -m 'deploy github pages prod'
-            if [[ $(git diff origin/gh-pages) ]] then
+            if [[ $(git diff origin/gh-pages) ]]
+            then
               echo "Remote changes are overwritten by local changes."
               git push -qf origin gh-pages:gh-pages
             else
