@@ -51,7 +51,7 @@ jobs:
           echo ${{ github.ref }}
           echo "DATA_TARGET=prod/data" >> $GITHUB_ENV
       - name: Sets env vars for PRs
-        if: false == ${{github.ref == 'refs/heads/main'}}
+        if: github.ref != 'refs/heads/main'
         run: |
           echo "pr data"
           echo ${{ github.ref }}
