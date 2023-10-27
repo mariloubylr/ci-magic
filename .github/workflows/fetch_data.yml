@@ -47,7 +47,6 @@ jobs:
       - name: Sets env vars for prod
         if: github.ref == 'refs/heads/main'
         run: |
-          if [[ ]]
           echo "production"
           echo ${{ github.ref }}
           echo "DATA_TARGET=prod/data" >> $GITHUB_ENV
