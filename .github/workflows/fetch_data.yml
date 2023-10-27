@@ -43,18 +43,15 @@ jobs:
           git config --global user.name "mariloubylr"
           git config --local advice.skippedCherryPicks false # Disable messages to include skipped commits
           git pull -q origin gh-pages --rebase -X theirs > /dev/null
+          ls
 
       - name: Sets env vars for prod
         if: github.ref == 'refs/heads/main'
         run: |
-          echo "production"
-          echo ${{ github.ref }}
           echo "DATA_TARGET=prod/data" >> $GITHUB_ENV
       - name: Sets env vars for PRs
         if: github.ref != 'refs/heads/main'
         run: |
-          echo "pr data"
-          echo ${{ github.ref }}
           echo "DATA_TARGET=PR-${{ github.event.number }}/data" >> $GITHUB_ENV
 
       - name: Copy data into repo
@@ -62,11 +59,9 @@ jobs:
           echo $DATA_TARGET
           mkdir -p $DATA_TARGET
           ls
-          cd ..
-          ls
-          cd data
-          ls
-          cp * ../temp_build/$DATA_TARGET
+          echo Going into data
+      
+          cp data/* temp_build/$DATA_TARGET
           cd ../temp_build
 
           git add -A
