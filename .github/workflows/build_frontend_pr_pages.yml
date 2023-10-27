@@ -16,16 +16,16 @@ jobs:
       run: |
             cd frontend
             npm install
-            mkdir -p app/dist/$PR_NUMBER
-            export VUE_APP_BASE=$PR_NUMBER
-            npm run build -- --dest=app/dist/${{PR_NUMBER}}
+            mkdir -p app/dist/${{env.PR_NUMBER}}
+            export VUE_APP_BASE=${{env.PR_NUMBER}}
+            npm run build -- --dest=app/dist/${{env.PR_NUMBER}}
             cd app/dist
             git config --global init.defaultBranch main
             git config --global user.email "marilou.beyeler@gmail.com"
             git config --global user.name "mariloubylr"
             git init
             git add -A
-            git commit -m 'deploy github pages $PR_NUMBER'
+            git commit -m 'deploy github pages ${{env.PR_NUMBER}}''
             
             if [[ $(git diff origin/gh-pages) ]]
             then
