@@ -7,7 +7,6 @@ on:
       - completed
   schedule:
     - cron: '*/6 * * * *' 
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -45,13 +44,17 @@ jobs:
           git config --local advice.skippedCherryPicks false # Disable messages to include skipped commits
           git pull -q origin gh-pages --rebase -X theirs > /dev/null
 
+      - name: Sets env vars for prod
+        run: |
+          echo "DATA_TARGET=prod/data" >> $GITHUB_ENV
+        if: startsWith(github.ref, 'refs/heads/main')
+      - name: Sets env vars for PRs
+        run: |
+          echo "DATA_TARGET=PR-${{ github.event.number }}/data" >> $GITHUB_ENV
+        if: false == ${{startsWith(github.ref, 'refs/heads/main')}}
+
       - name: Copy data into repo
         run: |
-          if [[ ${{github.ref}} == 'refs/heads/main' ]]; then
-            export DATA_TARGET_DIR=data/prod
-          else
-            export DATA_TARGET_DIR=data/PR-${{ github.event.number }}
-          fi
           echo $DATA_TARGET
           mkdir -p $DATA_TARGET
           cp ../data/* $DATA_TARGET
