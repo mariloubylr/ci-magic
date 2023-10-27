@@ -46,10 +46,14 @@ jobs:
 
       - name: Sets env vars for prod
         run: |
+          echo "production"
+          echo ${{ github.ref }}
           echo "DATA_TARGET=prod/data" >> $GITHUB_ENV
         if: startsWith(github.ref, 'refs/heads/main')
       - name: Sets env vars for PRs
         run: |
+          echo "pr data"
+          echo ${{ github.ref }}
           echo "DATA_TARGET=PR-${{ github.event.number }}/data" >> $GITHUB_ENV
         if: false == ${{startsWith(github.ref, 'refs/heads/main')}}
 
