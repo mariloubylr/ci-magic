@@ -17,10 +17,12 @@ jobs:
     - name: build and publish pages
       run: |
             cd frontend  
-            mkdir -p  ${{env.BUILD_DIR}}/${{env.PR_NUMBER}}
+            git clone --branch gh-pages ${{env.GITHUB_URL}} ${{env.BUILD_DIR}}
+            cd ${{env.BUILD_DIR}}
+            rm -rf ${{env.PR_NUMBER}}
             export VUE_APP_BASE=${{env.PR_NUMBER}}
             npm install
-            npm run build -- --dest=${{env.BUILD_DIR}}/${{env.PR_NUMBER}}
+            npm run build -- --dest=${{env.PR_NUMBER}}
             git clone --branch gh-pages ${{env.GITHUB_URL}} ${{env.BUILD_DIR}}
             cd ${{env.BUILD_DIR}}
             ls
