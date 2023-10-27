@@ -24,7 +24,7 @@ jobs:
             git config --global user.name "mariloubylr"
             git init
             git add -A
-            git commit -m 'deploy github pages'
+            git commit -m 'deploy github pages prod'
             
             git push -f https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git main:gh-pages
       shell: bash
