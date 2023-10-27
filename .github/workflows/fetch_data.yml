@@ -64,8 +64,10 @@ jobs:
           ls
           cd ..
           ls
-          cp data/* temp_build/$DATA_TARGET
-          cd temp_build
+          cd data
+          ls
+          cp * ../temp_build/$DATA_TARGET
+          cd ../temp_build
 
           git add -A
           git status
