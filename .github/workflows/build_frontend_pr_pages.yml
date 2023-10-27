@@ -5,6 +5,8 @@ on:
 
 env:
   PR_NUMBER: PR-${{ github.event.number }}
+  BUILD_DIR: app/dist
+  GITHUB_URL: https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,18 +17,18 @@ jobs:
     - name: build and publish pages
       run: |
             cd frontend
-            npm install
-            mkdir -p app/dist/${{env.PR_NUMBER}}
+            git clone --branch gh-pages ${{env.GITHUB_URL}} ${{env.BUILD_DIR}}
+            cd ${{env.BUILD_DIR}}
+            ls
+            mkdir -p ${{env.PR_NUMBER}}
             export VUE_APP_BASE=${{env.PR_NUMBER}}
-            npm run build -- --dest=app/dist/${{env.PR_NUMBER}}
-            cd app/dist
+            npm run build -- --dest= ${{env.PR_NUMBER}}
+
             git config --global user.email "marilou.beyeler@gmail.com"
             git config --global user.name "mariloubylr"
-            git init -q --initial-branch='gh-pages'
-            git remote add origin https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git
             git add -A
             git commit -m 'deploy github pages ${{env.PR_NUMBER}}'
             
-            git push -qf origin gh-pages:gh-pages
+            git push -qf ${{GITHUB_URL}} gh-pages:gh-pages
      
       shell: bash
