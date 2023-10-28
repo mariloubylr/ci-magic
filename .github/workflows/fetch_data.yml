@@ -1,4 +1,8 @@
 name: run data fetching job
+env:
+  PR_NUMBER: PR-${{ github.event.number }}
+  DATA_DIR: data
+  GITHUB_URL: https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git
 
 on: 
   workflow_run:
@@ -30,7 +34,7 @@ jobs:
 
       - name: execute python script # run main.py
         run: |
-          python backend/fetch_data.py data
+          python backend/fetch_data.py ${{env.DATA_DIR}}
           ls
 
       - name: Clone gh-pages repo
@@ -38,7 +42,7 @@ jobs:
           mkdir -p temp_build
           cd temp_build
           git init -q --initial-branch='gh-pages'
-          git remote add origin https://github.com/mariloubylr/ci-magic.git
+          git remote add origin ${{env.GITHUB_URL}}
           git config --global user.email "marilou.beyeler@gmail.com"
           git config --global user.name "mariloubylr"
           git config --local advice.skippedCherryPicks false # Disable messages to include skipped commits
@@ -58,14 +62,16 @@ jobs:
         run: |
           echo $DATA_TARGET
           mkdir -p temp_build/$DATA_TARGET
-          cp data/* temp_build/$DATA_TARGET/
+          cp ${{env.DATA_DIR}}/* temp_build/$DATA_TARGET/
         shell: bash
-      - name: Publish Data
+      - name: Commit Data
         run: |
           cd temp_build
           git add -A
           git status
           git commit -qm "update data to $DATA_TARGET"
-          git push -qf https://mariloubylr:${{ secrets.GITHUB_TOKEN }}@github.com/mariloubylr/ci-magic.git gh-pages:gh-pages
-  
+      - name: Push Data
+        if: git diff origin/gh-pages
+        run: |
+          git push -qf origin gh-pages:gh-pages
         shell: bash
