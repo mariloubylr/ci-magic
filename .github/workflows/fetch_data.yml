@@ -71,7 +71,7 @@ jobs:
           git status
           git commit -qm "update data to $DATA_TARGET"
       - name: Push Data
-        if: git diff origin/gh-pages
+        if: git diff-index --quiet origin/gh-pages
         run: |
           git push -qf origin gh-pages:gh-pages
         shell: bash
